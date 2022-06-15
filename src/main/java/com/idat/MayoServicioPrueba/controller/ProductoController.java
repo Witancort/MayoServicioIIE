@@ -16,13 +16,15 @@ import com.idat.MayoServicioPrueba.model.Productos;
 import com.idat.MayoServicioPrueba.service.ProductoService;
 
 @Controller
-@RequestMapping( path = "/producto/v1")
+@RequestMapping(path = "/producto/v1")
 public class ProductoController {
 	
 	
 	@Autowired
 	private ProductoService service;
 	
+	
+	//METODO LISTAR
 	
 	@RequestMapping("/listar")
 	public @ResponseBody ResponseEntity<List<Productos>> listar() {
@@ -31,19 +33,20 @@ public class ProductoController {
 		
 	}
 	
+	//METODO GUARDAR
+	
 	@RequestMapping( path = "/guardar", method = RequestMethod.POST)
 	public ResponseEntity<Void> guardar(@RequestBody Productos productos) {
 		service.guardarProducto(productos);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
-		
 	}
 	
+	//METODO ELIMINAR
+	
 	@RequestMapping( path = "/eliminar/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
-		
+	public ResponseEntity<Void> eliminar(@PathVariable Integer id) {	
 		
 	Productos producto =service.obtenerProductoId(id);
-	
 	
 	if(producto !=null) {
 	    service.eliminarProducto(id);
@@ -53,16 +56,14 @@ public class ProductoController {
 	
 	return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 	
-	
 	}
 	
+	//METODO ACTUALIZAR
 	
 	@RequestMapping( path = "/actualizar", method = RequestMethod.PUT)
 	public ResponseEntity<Void> actualizar(@RequestBody Productos productos) {
 		
-		
 	Productos producto =service.obtenerProductoId(productos.getIdProducto());
-	
 	
 	if(producto !=null) {
 	    service.actualizarProducto(productos);
@@ -73,12 +74,12 @@ public class ProductoController {
 	return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 	}
 	
+	//METODO BUSCAR POR ID
+	
 	@RequestMapping( path = "/listar/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Productos> obtenerId(@PathVariable Integer id) {
 		
-		
 	Productos producto =service.obtenerProductoId(id);
-	
 	
 	if(producto !=null) {
 		return new ResponseEntity<Productos>(service.obtenerProductoId(id),(HttpStatus.OK));
