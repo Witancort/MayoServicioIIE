@@ -77,7 +77,7 @@ public class ProductoController {
 	//METODO BUSCAR POR ID
 	
 	@RequestMapping( path = "/listar/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Productos> obtenerId(@PathVariable Integer id) {
+	public ResponseEntity<Productos> obtenerId(@PathVariable Integer id) { 
 		
 	Productos producto =service.obtenerProductoId(id);
 	
