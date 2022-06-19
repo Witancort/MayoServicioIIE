@@ -1,10 +1,14 @@
 package com.idat.MayoServicioPrueba.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.catalina.filters.AddDefaultCharsetFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.idat.MayoServicioPrueba.dto.ProductoDTORequest;
+import com.idat.MayoServicioPrueba.dto.ProductoDTOResponse;
 import com.idat.MayoServicioPrueba.model.Productos;
 import com.idat.MayoServicioPrueba.repository.ProductoRepository;
 
@@ -18,16 +22,33 @@ public class ProductoServiceImpl implements ProductoService {
 	
 
 	@Override
-	public void guardarProducto(Productos producto) {
+	public void guardarProducto(ProductoDTORequest producto) {
 		// TODO Auto-generated method stub
-		repository.save(producto);
+		
+		Productos p  = new Productos();
+		
+		p.setNombreProducto(producto.getNombre());
+		p.setDescripcion(p.getDescripcion());
+		p.setPrecio(producto.getPrecioProducto());
+		p.setStock(producto.getStockProducto());
+		
+		repository.save(p);
 
 	}
 
 	@Override
-	public void actualizarProducto(Productos producto) {
+	public void actualizarProducto(ProductoDTORequest producto) {
 		// TODO Auto-generated method stub
-		repository.saveAndFlush(producto);
+		
+		Productos p  = new Productos();
+		
+		p.setIdProducto(producto.getId());
+		p.setNombreProducto(producto.getNombre());
+		p.setDescripcion(p.getDescripcion());
+		p.setPrecio(producto.getPrecioProducto());
+		p.setStock(producto.getStockProducto());
+		
+		repository.saveAndFlush(p);
 
 	}
 
@@ -39,15 +60,47 @@ public class ProductoServiceImpl implements ProductoService {
 	}
 
 	@Override
-	public List<Productos> listarProductos() {
-		// TODO Auto-generated method stub
-		return repository.findAll();
+	public List<ProductoDTOResponse> listarProductos() {
+		
+		
+		List<ProductoDTOResponse> listar = new ArrayList<>();
+		
+		ProductoDTOResponse dto = null;
+		
+		List<Productos> p = repository.findAll();
+		
+		for (Productos productos : p) {
+			dto = new ProductoDTOResponse();
+			
+			dto.setDescripcionProducto(productos.getDescripcion());
+			dto.setNombre(productos.getNombreProducto());
+			dto.setPrecioProducto(productos.getPrecio());
+			dto.setStockProducto(productos.getStock());
+			dto.setId(productos.getIdProducto());
+			
+			listar.add(dto);
+			
+			
+		}
+		
+		return listar;
 	}
 
 	@Override
-	public Productos obtenerProductoId(Integer id) {
+	public ProductoDTOResponse obtenerProductoId(Integer id) {
 		// TODO Auto-generated method stub
-		return repository.findById(id).orElse(null);		
+		
+		Productos productos = repository.findById(id).orElse(null);
+		
+		ProductoDTOResponse dto = new ProductoDTOResponse();
+		
+		dto.setDescripcionProducto(productos.getDescripcion());
+		dto.setNombre(productos.getNombreProducto());
+		dto.setPrecioProducto(productos.getPrecio());
+		dto.setStockProducto(productos.getStock());
+		dto.setId(productos.getIdProducto());
+		
+		return dto;	
 	}
 
 }

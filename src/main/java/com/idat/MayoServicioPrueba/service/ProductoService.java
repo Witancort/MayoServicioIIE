@@ -4,17 +4,17 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.idat.MayoServicioPrueba.model.Productos;
+import com.idat.MayoServicioPrueba.dto.ProductoDTORequest;
+import com.idat.MayoServicioPrueba.dto.ProductoDTOResponse;
 
 @Repository
 
 public interface ProductoService {
 	
-	
-	void guardarProducto(Productos producto);
-	void actualizarProducto(Productos producto);
+	void guardarProducto(ProductoDTORequest producto);
+	void actualizarProducto(ProductoDTORequest producto);
 	void eliminarProducto(Integer id);
-	List<Productos> listarProductos();
-	Productos obtenerProductoId(Integer id);
+	List<ProductoDTOResponse> listarProductos();
+	ProductoDTOResponse obtenerProductoId(Integer id);
 
 }
